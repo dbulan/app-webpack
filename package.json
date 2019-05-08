@@ -2,10 +2,23 @@
   "name": "app-webpack",
   "version": "1.0.0",
   "description": "",
-  "main": "public/",
+  "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "dev": "webpack --mode development -p",
+    "build": "webpack --mode production -p",
+    "watch": "webpack --mode development --watch",
+    "start": "webpack-dev-server --mode development"
   },
   "author": "dbulan",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.3.1"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
 }
