@@ -16,7 +16,7 @@ module.exports = {
   },
 
   devServer: { // ili default: http://localhost:8080
-    contentBase: distPath, // t.k. index file unas v public/index.html, nuzna opcija devServer
+    contentBase: distPath, // t.k. index file u nas v public/index.html, nuzna opcija devServer
     port: 9000,
     //compress: true,
     //inline: true,
