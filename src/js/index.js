@@ -1,11 +1,15 @@
 import $ from 'jquery';
+import moment from 'moment';
 
-window.$ = window.jQuery = $; // same thing for _lodash etc.
+//window.$ = window.jQuery = $; // same thing for _lodash etc. // now in plugins -> ProvidePlugin
 
 // po suti eto vendor(bundle).js dlya podkljuchenia (jquery, bootstrap, lodash i tp)
 // no eto ostavim tut dlya primera t.k. chtobi pokazatt' chto hello.js videt jquery otsjuda
 $(document).ready(function() {
   $('body').css('background-color', 'pink');
+
+  let today = moment(new Date()).locale('ru');
+  $('body').append(`<div>${today.format('MMMM Do YYYY, h:mm:ss a')}</div>`);
 });
 
 

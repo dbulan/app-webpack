@@ -1,5 +1,6 @@
 'use strict'
 
+const webpack = require('webpack'); // chtobi zapuskat' plugini
 const path = require('path');
 // const webpack = require('webpack'); // esli naprimer hotim process.env. variables byli vidni v entry files (dovaim plugins:)
 // no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
@@ -57,6 +58,21 @@ module.exports = {
     //new webpack.EnvironmentPlugin('PORT') // hotim process.env. variables byli vidni v entry files
     // no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
     // xotia NODE_ENV v index.js rabotaet i bez etogo no drugie variables peredat ne udalos
+
+    // windows regexp dlya momentjs(ru|en) locale prichem eto dlya dev sborki, dlya prod i bez nee norm, viberet tolko to chto nuzno.
+    new webpack.ContextReplacementPlugin(
+      /moment[/\\]locale$/, 
+      /en-gb|ru/
+    ),
+    // ContextReplacementPlugin - white list
+    //             IgnorePlugin - black list (lutse white list uzat')
+
+    // jquery
+    // izbovlaemsa ot window.$ = window.jQuery = $; v index.js
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    })
   ],
 
   module: {
