@@ -17,3 +17,13 @@ $(document).ready(function() {
   //console.log('index: development mode!');
   //}
 }());
+
+(function wow() { // function inside function
+       
+  const load = () => {
+    console.log('wow index.js loaded!');
+  };
+
+  load();
+})(); // vseravno sama sebja vizivaet
+// wow(); // a tak nelzia // wow is not defined

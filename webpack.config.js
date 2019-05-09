@@ -5,18 +5,22 @@ const path = require('path');
 // no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
 // xotia NODE_ENV v index.js rabotaet i bez etogo no drugie variables peredat ne udalos
 
-const distPath = path.join(__dirname, '/public'); // output path (or: path.resolve(__dirname, 'public'))
+const distPath = path.join(__dirname, '/public');
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 
 module.exports = {
   // if [custom] | [default] -> output
-  //entry: './src/index.js',
+  //entry: './src/js/index.js',
 
   // if [manyjs] .js (bundle(vendor) & game.js+hello module)
+  
+  // context: __dirname+'/src/js', // otnositelno kakoj dir delat poisk, togda mozno: 'game': './game.js'
+  
   entry: {
-    'bundle': './src/index.js',
-    'game': './src/js/game.js',
+    bundle: './src/js/index.js',
+    game: './src/js/game.js',
+    chat: './src/js/chat.js'
   },
   
   output: {
@@ -53,5 +57,24 @@ module.exports = {
     //new webpack.EnvironmentPlugin('PORT') // hotim process.env. variables byli vidni v entry files
     // no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
     // xotia NODE_ENV v index.js rabotaet i bez etogo no drugie variables peredat ne udalos
-  ]
+  ],
+
+  module: {
+    rules: [ // pravila dlya .js .scss etc.
+      {
+        test: /\.js$/,
+        
+        //exclude: /node_modules/,
+        exclude: /(node_modules|public)/, // kuda ne zaxodim v poiski js
+        include: path.resolve(__dirname, 'src/js'), // (!) absolute path
+
+        use: {
+          loader: 'babel-loader',
+          options: { // mozno vinesti v .babelrc?
+            presets: ['@babel/preset-env'], // chet 'env' bolse ne rabotaet
+          }
+        }
+      }
+    ],
+  }
 };
