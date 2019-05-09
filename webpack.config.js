@@ -1,16 +1,18 @@
 'use strict'
 
-const webpack = require('webpack'); // chtobi zapuskat' plugini
 const path = require('path');
+const webpack = require('webpack'); // chtobi zapuskat' plugini
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 // const webpack = require('webpack'); // esli naprimer hotim process.env. variables byli vidni v entry files (dovaim plugins:)
 // no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
 // xotia NODE_ENV v index.js rabotaet i bez etogo no drugie variables peredat ne udalos
 
 const distPath = path.join(__dirname, '/public');
-const NODE_ENV = process.env.NODE_ENV || 'development';
+//const IS_DEV = NODE_ENV == 'development';
 
-
-module.exports = {
+module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
+//module.exports = {
   // if [custom] | [default] -> output
   //entry: './src/js/index.js',
 
@@ -72,7 +74,16 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
-    })
+    }),
+
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+      //filename: devMode ? '[name].css' : '[name].[contenthash].css',
+      //chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
+    }),
   ],
 
   module: {
@@ -90,7 +101,25 @@ module.exports = {
             presets: ['@babel/preset-env'], // chet 'env' bolse ne rabotaet
           }
         }
+      },
+      {
+        test: /\.s?[ac]ss$/, // css or sass
+
+        exclude: /(node_modules|public)/, // kuda ne zaxodim v poiski js
+        use: [
+          argv.mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          { loader: 'css-loader' },
+          //{ loader: 'sass-loader', options: { sourceMap: true } }
+        ],
+        /*
+        use: [
+          'style-loader', 
+          MiniCssExtractPlugin.loader, 
+          'css-loader',
+          'sass-loader'
+        ]
+        */
       }
     ],
   }
-};
+});
