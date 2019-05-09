@@ -8,7 +8,8 @@
     "dev": "webpack --mode development --progress",
     "build": "webpack --mode production --progress -p",
     "watch": "webpack --mode development --watch --progress",
-    "start": "webpack-dev-server --mode development"
+    "start": "webpack-dev-server --mode development",
+    "start-prod": "webpack-dev-server --mode production"
   },
   "author": "dbulan",
   "license": "ISC",

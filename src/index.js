@@ -7,3 +7,13 @@ window.$ = window.jQuery = $; // same thing for _lodash etc.
 $(document).ready(function() {
   $('body').css('background-color', 'pink');
 });
+
+
+(function () { // inace console.log ne otrabotaet -> callback v konce
+  
+  console.log(process.env.NODE_ENV); // current mode
+  //console.log(process.env.PORT);
+  //if(process.env.NODE_ENV == 'pro') {
+  //console.log('index: development mode!');
+  //}
+}());

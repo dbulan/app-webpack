@@ -1,8 +1,13 @@
 'use strict'
 
 const path = require('path');
+// const webpack = require('webpack'); // esli naprimer hotim process.env. variables byli vidni v entry files (dovaim plugins:)
+// no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
+// xotia NODE_ENV v index.js rabotaet i bez etogo no drugie variables peredat ne udalos
 
 const distPath = path.join(__dirname, '/public'); // output path (or: path.resolve(__dirname, 'public'))
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
 
 module.exports = {
   // if [custom] | [default] -> output
@@ -35,5 +40,18 @@ module.exports = {
     //hot: true,
     
     open: true // open browser
-  }
+  },
+
+  watchOptions: {
+    aggregateTimeout: 100, // uskorim sborku, zadaet timeout na sborku webpack (t.k. ne vse fajli IDE uspel sohranit)
+  },
+
+  // voobwe v webpack-dev-server 'eval' by default
+  //'devtool': NODE_ENV == 'development' ? 'eval' : null, // uncomment if dev-server not webpack-dev
+
+  plugins: [
+    //new webpack.EnvironmentPlugin('PORT') // hotim process.env. variables byli vidni v entry files
+    // no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
+    // xotia NODE_ENV v index.js rabotaet i bez etogo no drugie variables peredat ne udalos
+  ]
 };

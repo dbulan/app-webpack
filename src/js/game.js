@@ -9,7 +9,7 @@ $(document).ready(function() {
   alerter.init();
 
   helpers.init(); // jquery test inside helper
-  console.log(helpers.isNoU(null));
+  console.log(helpers.isNoU('admin'));
 });
 
 hello('Hi! Hi! Hi!');
