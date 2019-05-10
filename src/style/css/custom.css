@@ -3,3 +3,7 @@ div {
   padding: 5px;
   margin: 5px;
 }
+.app-img-bg {
+  background: url('../../images/bg.jpg');
+  border: 3px solid #EEE;
+}

@@ -125,15 +125,50 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
           { loader: 'css-loader' },
           //{ loader: 'sass-loader', options: { sourceMap: true } }
         ],
-        /*
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        
+        // ne znaju na skolko eto zdes umestno
+        //exclude: /(node_modules|public)/, // a esli images plagina berutsa iz node modules?
+        //include: path.resolve(__dirname, 'src/images'),
+        exclude: /(public)/, // nu ostavim tak.
+        
         use: [
-          'style-loader', 
-          MiniCssExtractPlugin.loader, 
-          'css-loader',
-          'sass-loader'
-        ]
-        */
-      }
+          {
+            // (!) puti v css dolzni nachitsa s ../path a-ne s /path
+            loader: 'file-loader',
+            options: {
+              name(file) {
+                if (argv.mode === 'development') {
+                  return 'images/[name].[ext]'; // dlya dev sohranim v public/images s realnim imenem
+                }
+
+                return '[hash].[ext]'; // dlya prod zaxeshiruem
+                // (!) imya daetsa po hash sum iskljucheni duplikacii pri mnogokratnom build
+                // a mozno i tak [name].[ext]?[hash]
+              },
+            },
+          },
+        ],
+      },
+
+      {
+        // dlya fontov po analogii s images
+        test: /\.(eot|svg|ttf|woff|woff2)$/i,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name(file) {
+              if (argv.mode === 'development') {
+                return 'fonts/[name][hash].[ext]';
+              }
+
+              return '[name][hash].[ext]';
+            },
+          }
+        },
+      },
     ],
   }
 });
