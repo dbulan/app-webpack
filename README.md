@@ -7,4 +7,4 @@
 - [webpack-003](https://github.com/dbulan/app-webpack/tree/003-jquery-jsmodules-babel) Jquery + JS(modules) + Babel
 - [webpack-004](https://github.com/dbulan/app-webpack/tree/004-jquery-jsmodules-babel-cssmin) Jquery + JS(modules) + Babel + CSS(minify)
 - [webpack-005](https://github.com/dbulan/app-webpack/tree/005-jquery-jsmodules-babel-cssmin-fileloader) Jquery + JS(modules) + Babel + CSS(minify) + FileLoader(images/fonts)
-- [webpack-006](https://github.com/dbulan/app-webpack/tree/005-jquery-jsmodules-babel-cssmin-fileloader-scss) Jquery + JS(modules) + Babel + CSS(minify) + FileLoader(images/fonts) + SCSS
+- [webpack-006](https://github.com/dbulan/app-webpack/tree/006-jquery-jsmodules-babel-cssmin-fileloader-scss) Jquery + JS(modules) + Babel + CSS(minify) + FileLoader(images/fonts) + SCSS
