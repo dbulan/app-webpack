@@ -5,6 +5,8 @@ const webpack = require('webpack'); // chtobi zapuskat' plugini
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 // const webpack = require('webpack'); // esli naprimer hotim process.env. variables byli vidni v entry files (dovaim plugins:)
 // no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
@@ -38,7 +40,8 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
 
     // [manyjs]
     path: distPath,
-    filename: '[name].js',
+    filename: argv.mode === 'development' ? '[name].js' : '[name].[chunkhash].js',
+    publicPath: '',
   },
 
   devServer: { // ili default: http://localhost:8080
@@ -59,6 +62,8 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
   //'devtool': NODE_ENV == 'development' ? 'eval' : null, // uncomment if dev-server not webpack-dev
 
   plugins: [
+    new CleanWebpackPlugin(),
+
     //new webpack.EnvironmentPlugin('PORT') // hotim process.env. variables byli vidni v entry files
     // no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
     // xotia NODE_ENV v index.js rabotaet i bez etogo no drugie variables peredat ne udalos
@@ -83,11 +88,19 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: '[name].css',
-      chunkFilename: '[id].css'
-      //filename: devMode ? '[name].css' : '[name].[contenthash].css',
-      //chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
+      //filename: '[name].css',
+      //chunkFilename: '[id].css'
+      filename: argv.mode === 'development' ? '[name].css' : '[name].[contenthash].css',
+      chunkFilename: argv.mode === 'development' ? '[id].css' : '[id].[contenthash].css',
     }),
+
+    new HtmlWebpackPlugin({
+      inject: 'head',
+      //hash: true, // hash html?041bead596a02778e9fb, xotia sam webpack delaet hash -> [name][hash].js
+      minify: false,
+      template: './src/html/index.html',
+      filename: 'index.html',
+    })
   ],
 
   optimization: {
@@ -176,6 +189,18 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
           }
         },
       },
+
+      {
+        test: /\.(html)$/,
+        //exclude: /(node_modules|public)/, // kuda ne zaxodim v poiski js
+        //include: path.resolve(__dirname, 'src/html'),
+        use: {
+          loader: 'html-loader?minimize=false',
+          // options: {
+          //   attrs: [':data-src']
+          // }
+        }
+      }
     ],
   }
 });
