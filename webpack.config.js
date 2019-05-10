@@ -3,6 +3,8 @@
 const path = require('path');
 const webpack = require('webpack'); // chtobi zapuskat' plugini
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
 
 // const webpack = require('webpack'); // esli naprimer hotim process.env. variables byli vidni v entry files (dovaim plugins:)
 // no poxodu eto uze i bez stroki vishe rabotaet, poetomu zakommentim
@@ -86,6 +88,12 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
     }),
   ],
 
+  optimization: {
+    // css minification, (!) esli ne podkljuchit' TerserJsPlugin to posle build budet warning o minifilacii css
+    // pri etom Terser stavitsa vmeste OptimizeCss..
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+  },
+
   module: {
     rules: [ // pravila dlya .js .scss etc.
       {
@@ -104,8 +112,8 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
       },
       {
         test: /\.s?[ac]ss$/, // css or sass
-
         exclude: /(node_modules|public)/, // kuda ne zaxodim v poiski js
+
         use: [
           argv.mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
           { loader: 'css-loader' },
