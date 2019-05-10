@@ -1,9 +1,16 @@
 import $ from 'jquery';
 import moment from 'moment';
 
-import '../style/css/custom.css';
+// css (without sass)
+//import '../style/css/custom.css';
 
-//window.$ = window.jQuery = $; // same thing for _lodash etc. // now in plugins -> ProvidePlugin
+// css + sass
+import '../style/scss/app.scss';
+
+window.$ = window.jQuery = $; // same thing for _lodash etc. 
+// a mozno v  plugins -> ProvidePlugin
+// no togda jquery budet 2 raza v bilde index.js i game.js
+// poetomu ostavljaem etot variant (on menj poka ustraivaet) t.e. jquery tolka v index.js a game.js vseravno ego ponimaet
 
 // po suti eto vendor(bundle).js dlya podkljuchenia (jquery, bootstrap, lodash i tp)
 // no eto ostavim tut dlya primera t.k. chtobi pokazatt' chto hello.js videt jquery otsjuda

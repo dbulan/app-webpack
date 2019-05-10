@@ -25,7 +25,7 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
   entry: {
     bundle: './src/js/index.js',
     game: './src/js/game.js',
-    chat: './src/js/chat.js'
+    chat: './src/js/chat.js',
   },
   
   output: {
@@ -73,10 +73,12 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
 
     // jquery
     // izbovlaemsa ot window.$ = window.jQuery = $; v index.js
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery'
-    }),
+    // no v takom sluchae jquery budet 2 raza v bilde v index.js i game.js
+    // esli ostavit window.$ = ..., to tolko v index.js a game.js vseravno ego ponimaet (eto sejcas menja ustraivaet)
+    //new webpack.ProvidePlugin({
+    //  $: 'jquery',
+    //  jQuery: 'jquery'
+    //}),
 
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
@@ -123,7 +125,12 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
           argv.mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
           // esli bozniknut problem
           { loader: 'css-loader' },
-          //{ loader: 'sass-loader', options: { sourceMap: true } }
+          { 
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
         ],
       },
       {

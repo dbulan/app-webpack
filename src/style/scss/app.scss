@@ -1,0 +1,13 @@
+@import "../css/custom.css";
+
+.app-sass {
+  font-size: 16px;
+  .one {
+    background: url('../../images/bg.jpg');
+    border: 3px solid blue;
+  }
+  .two {
+    background: url('../../images/bg-2.jpg');
+    border: 3px solid orange;
+  }
+}
