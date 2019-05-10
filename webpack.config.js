@@ -111,11 +111,17 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
         }
       },
       {
-        test: /\.s?[ac]ss$/, // css or sass
+        //test: /\.s?[ac]ss$/, // css or sass
+        test: /\.(css|sass|scss)$/,
         exclude: /(node_modules|public)/, // kuda ne zaxodim v poiski js
+        include: path.resolve(__dirname, 'src/style'),
 
         use: [
+          // style-loader ne sozdaet bundli css on prosto virtualno pogruzaet css pri dev
+          // esli vozniknut pri dev problemi to prosto ostavim stroku MiniCssExtractPlugin.loader,
+          // dlya extracta css v public folder
           argv.mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          // esli bozniknut problem
           { loader: 'css-loader' },
           //{ loader: 'sass-loader', options: { sourceMap: true } }
         ],

@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import moment from 'moment';
 
-import '../css/custom.css';
+import '../style/css/custom.css';
 
 //window.$ = window.jQuery = $; // same thing for _lodash etc. // now in plugins -> ProvidePlugin
 
