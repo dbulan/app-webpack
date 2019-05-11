@@ -100,7 +100,14 @@ module.exports = (env, argv) => ({ // inache --mode nikak ne vitjanut'
       minify: false,
       template: './src/html/index.html',
       filename: 'index.html',
-    })
+      
+      // ukazivaju kakie bundli podkljuchit' v index.html, esli ne ukazan to sam intellektualno najdet
+      // chunks: ['bundle', game']
+    }),
+    // new HtmlWebpackPlugin({ // esli xochu ewe dlya odnogo fajla operaciju
+    //  template: './src/html/about.html',
+    //  chunks: ['bundle', 'about']
+    //}),
   ],
 
   optimization: {
